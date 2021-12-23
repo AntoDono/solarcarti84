@@ -7,7 +7,7 @@ import Velocity
 def main():
     ti.disp_clr()
     print('WELCOME TO SUN CALC\n\n')
-    MenuItem = input('PLEASE SELECT AN OPTION: \n1 - VEL CALC\n2 - DIST CALC\n3 - TO QUIT PROGRAM\n\nCHOICE: ')
+    MenuItem = input('PLEASE SELECT AN OPTION: \n1 - VEL CALC\n2 - DIST CALC\n0 - TO QUIT PROGRAM\n\nCHOICE: ')
     if MenuItem.isdigit():
         MenuItem = int(MenuItem)
 
@@ -21,7 +21,7 @@ def main():
             input('\n\n\n\nONCE READY PRESS ANY KEY')
             main()
         
-        elif MenuItem == 3:
+        elif MenuItem == 0:
             ti.disp_clr()
             print('THANK YOU FOR USING STAR CALC!!\n')
             sleep(2)
