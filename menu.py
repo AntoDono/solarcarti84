@@ -42,6 +42,7 @@ def main():
     else:
         ti.disp_clr()
         print('PLEASE ENTER A VALID OPTION')
+        sleep(1)
         main()        
         
 
