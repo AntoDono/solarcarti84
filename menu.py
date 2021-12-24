@@ -38,6 +38,11 @@ def main():
             ti.disp_clr()
             print('PLEASE ENTER A VALID OPTION')
             main()
+    
+    else:
+        ti.disp_clr()
+        print('PLEASE ENTER A VALID OPTION')
+        main()        
         
 
 main()
