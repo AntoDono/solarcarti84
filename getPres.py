@@ -1,5 +1,5 @@
-from vars import *
+from vars import batteries
 
-def main(num):  # accepts argument of index of battery starting from 0
-    battery = batteries[num]
-    return battery
+def getPres(battType):  # accepts argument of index of battery starting from 0
+    return batteries[battType]
+
