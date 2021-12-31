@@ -12,3 +12,4 @@ batteries = {
         "nominal-voltage": 3.6
     }
 }
+
