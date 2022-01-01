@@ -1,12 +1,4 @@
 import os
-import getArea
-import getArray
-import getPAB
-import getPara
-import getPow
-import SCharge
-import Velocity
-import brute
 import batttype
 
 try:
@@ -22,21 +14,21 @@ def clear():
 
 def printOptions():
     count = 1
-    print(str(count) + ". " + getArea.description())
+    print(str(count) + ". " + "Calculate solar array area")
     count += 1
-    print(str(count) + ". " + getArray.description())
+    print(str(count) + ". " + "Calculate Array Voltage")
     count += 1
-    print(str(count) + ". " + getPAB.description())
+    print(str(count) + ". " + "Calculate Amp Hour")
     count += 1
-    print(str(count) + ". " + getPara.description())
+    print(str(count) + ". " + "Calculate Parallel Batteries")
     count += 1
-    print(str(count) + ". " + getPow.description())
+    print(str(count) + ". " + "Calculate Power")
     count += 1
-    print(str(count) + ". " + SCharge.description())
+    print(str(count) + ". " + "Calculates Supercharged Voltage")
     count += 1
-    print(str(count) + ". " + Velocity.description())
+    print(str(count) + ". " + "Returns velocity")
     count += 1
-    print(str(count) + ". " + brute.description())
+    print(str(count) + ". " + "Brute force best combination for series and parallel")
 
 def selectBattery():
     clear()
@@ -89,37 +81,42 @@ def main():
     choice = isint((input("\nSelect an option > ")))
 
     if (choice == 1):
+        import getArea
         clear()
         cells = isint(input("Please input the number of cells: "))
         area = isint(input("Please input the area of one cell: "))
         result = getArea.getArea(cells, area)
-        print("The total area of the solar array is: %d" % (result))
+        print("The total area of the solar array is: %f" % (result))
         input("Press enter to continue...")
         clear()
     elif (choice == 2):
+        import getArray
         clear()
         cells = isint(input("Please input the number of cells: "))
         volt = isint(input("Please input the voltage of one cell: "))
         result = getArray.getArray(cells, volt)
-        print("The total voltage of the solar array is: %d" % (result))
+        print("The total voltage of the solar array is: %f" % (result))
         input("Press enter to continue...")
         clear()
     elif (choice == 3):
+        import getPAB
         clear()
         battvolt = isint(input("Please input the battery voltage: "))
         result = getPAB.getPAB(battvolt)
-        print("The resulted amp hour is: %d" % (result))
+        print("The resulted amp hour is: %f" % (result))
         input("Press enter to continue...")
         clear()
     elif (choice == 4):
+        import getPara
         clear()
         battAmp = isint(input("Please input the battery amp hour: "))
         cellAmp = isint(input("Please input the cell amp hour: "))
         result = getPara.getPara(battAmp, cellAmp)
-        print("The resulted number of batteries needed are: %d" % (result))
+        print("The resulted number of batteries needed are: %f" % (result))
         input("Press enter to continue...")
         clear()
     elif (choice == 5):
+        import getPow
         clear()
         arrvolt = isint(input("Voltage of the whole array: "))
         current = isint(input("Please input the current: "))
@@ -128,21 +125,26 @@ def main():
         print("The power is: {result}")
         clear()
     elif (choice == 6):
+        import SCharge
+
         clear()
         volt = isint(input("Desire voltage: "))
         result = SCharge.getSCharge(volt)
-        print("The supercharged voltage is: %d" % (result))
+        print("The supercharged voltage is: %f" % (result))
         input("Press enter to continue...")
         clear()
     elif (choice == 7):
+        import Velocity
+
         clear()
         dist = isint(input("Distance traveled (m): "))
         time = isint(input("Elapsed time (s): "))
         result = Velocity.getVelocity(dist, time)
-        print("The velocity is: %d m/s" % (result))
+        print("The velocity is: %f m/s" % (result))
         input("Press enter to continue...")
         clear()
     elif (choice==8):
+        import brute
         clear()
         nominal_volt = isint(input("Please provide the nominal (desired) voltage: "))
         choice = selectBattery()
@@ -152,11 +154,11 @@ def main():
         print("Best result found:")
         print(result)
         print("===================RESULT=====================")
-        print("Batteries in parallel | %d" % (result['parallel']))
-        print("Batteries in series | %d" % (result['series']))
-        print("Total Voltage | %d" % (result['voltage']))
-        print("Batteries in series | %d" % (result['amp']))
-        print("Total power | %d" % (result['max']))
+        print("Batteries in parallel | %f" % (result['parallel']))
+        print("Batteries in series | %f" % (result['series']))
+        print("Total Voltage | %f" % (result['voltage']))
+        print("Batteries in series | %f" % (result['amp']))
+        print("Total power | %f" % (result['max']))
         print("==============================================")
         input("Press enter to continue...")
 

@@ -40,7 +40,7 @@ def bruteForce(nominal_voltage, battery_type, priority="power", verbose=False):
         brute_parallel = parallel
         brute_series = series
         
-        if (verbose): print("Current scenario: %d | PC: %d | SC: %d" % (scenario, parallel_change, series_change) )
+        if (verbose): print("Current scenario: %f | PC: %f | SC: %f" % (scenario, parallel_change, series_change) )
 
         for outer in range(0, maximum_iteration ):
 
@@ -54,7 +54,7 @@ def bruteForce(nominal_voltage, battery_type, priority="power", verbose=False):
 
                 brute_power = brute_nominal * brute_amp
 
-                if (verbose): print("Series: %d | Parallel: %d | Power: %d" % (brute_series, brute_parallel, brute_power))
+                if (verbose): print("Series: %f | Parallel: %f | Power: %f" % (brute_series, brute_parallel, brute_power))
 
                 if (brute_power <= 5000):
                     applychange = False
