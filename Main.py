@@ -6,7 +6,7 @@ import getPara
 import getPow
 import SCharge
 import Velocity
-import bruteForce
+import brute
 import batttype
 
 try:
@@ -22,21 +22,21 @@ def clear():
 
 def printOptions():
     count = 1
-    print(f"{count}. {getArea.description()}")
+    print(str(count) + ". " + getArea.description())
     count += 1
-    print(f"{count}. {getArray.description()}")
+    print(str(count) + ". " + getArray.description())
     count += 1
-    print(f"{count}. {getPAB.description()}")
+    print(str(count) + ". " + getPAB.description())
     count += 1
-    print(f"{count}. {getPara.description()}")
+    print(str(count) + ". " + getPara.description())
     count += 1
-    print(f"{count}. {getPow.description()}")
+    print(str(count) + ". " + getPow.description())
     count += 1
-    print(f"{count}. {SCharge.description()}")
+    print(str(count) + ". " + SCharge.description())
     count += 1
-    print(f"{count}. {Velocity.description()}")
+    print(str(count) + ". " + Velocity.description())
     count += 1
-    print(f"{count}. {bruteForce.description()}")
+    print(str(count) + ". " + brute.description())
 
 def selectBattery():
     clear()
@@ -44,7 +44,7 @@ def selectBattery():
     count = 1
     mapBatt = {}
     for batt in batttype.batteries.keys():
-        print(f"{count}. {batt} | V: {str(batttype.batteries[batt]['nominal-voltage'])} AH: {str(batttype.batteries[batt]['Ah'])}")
+        print("%d. %s | V: %s AH: %s" % (count, batt, str(batttype.batteries[batt]['nominal-voltage']), str(batttype.batteries[batt]['Ah'])))
         mapBatt[count] = batt
         count+=1
     choice = isint(input("Select a battery > "))
@@ -93,7 +93,7 @@ def main():
         cells = isint(input("Please input the number of cells: "))
         area = isint(input("Please input the area of one cell: "))
         result = getArea.getArea(cells, area)
-        print(f"The total area of the solar array is: {result}")
+        print("The total area of the solar array is: %d" % (result))
         input("Press enter to continue...")
         clear()
     elif (choice == 2):
@@ -101,14 +101,14 @@ def main():
         cells = isint(input("Please input the number of cells: "))
         volt = isint(input("Please input the voltage of one cell: "))
         result = getArray.getArray(cells, volt)
-        print(f"The total voltage of the solar array is: {result}")
+        print("The total voltage of the solar array is: %d" % (result))
         input("Press enter to continue...")
         clear()
     elif (choice == 3):
         clear()
         battvolt = isint(input("Please input the battery voltage: "))
         result = getPAB.getPAB(battvolt)
-        print(f"The resulted amp hour is: {result}")
+        print("The resulted amp hour is: %d" % (result))
         input("Press enter to continue...")
         clear()
     elif (choice == 4):
@@ -116,7 +116,7 @@ def main():
         battAmp = isint(input("Please input the battery amp hour: "))
         cellAmp = isint(input("Please input the cell amp hour: "))
         result = getPara.getPara(battAmp, cellAmp)
-        print(f"The resulted number of batteries needed are: {result}")
+        print("The resulted number of batteries needed are: %d" % (result))
         input("Press enter to continue...")
         clear()
     elif (choice == 5):
@@ -125,13 +125,13 @@ def main():
         current = isint(input("Please input the current: "))
         result = getPow.getPow(arrvolt, current)
         input("Press enter to continue...")
-        print(f"The power is: {result}")
+        print("The power is: {result}")
         clear()
     elif (choice == 6):
         clear()
         volt = isint(input("Desire voltage: "))
         result = SCharge.getSCharge(volt)
-        print(f"The supercharged voltage is: {result}")
+        print("The supercharged voltage is: %d" % (result))
         input("Press enter to continue...")
         clear()
     elif (choice == 7):
@@ -139,7 +139,7 @@ def main():
         dist = isint(input("Distance traveled (m): "))
         time = isint(input("Elapsed time (s): "))
         result = Velocity.getVelocity(dist, time)
-        print(f"The velocity is: {result} m/s")
+        print("The velocity is: %d m/s" % (result))
         input("Press enter to continue...")
         clear()
     elif (choice==8):
@@ -148,15 +148,15 @@ def main():
         choice = selectBattery()
         priority = choosePriority()
         verbose = isverbose()
-        result = bruteForce.bruteForce(nominal_volt, choice, priority=priority, verbose=verbose)
+        result = brute.bruteForce(nominal_volt, choice, priority=priority, verbose=verbose)
         print("Best result found:")
         print(result)
         print("===================RESULT=====================")
-        print(f"Batteries in parallel | {result['parallel']}")
-        print(f"Batteries in series | {result['series']}")
-        print(f"Total Voltage | {result['voltage']}")
-        print(f"Batteries in series | {result['amp']}")
-        print(f"Total power | {result['max']}")
+        print("Batteries in parallel | %d" % (result['parallel']))
+        print("Batteries in series | %d" % (result['series']))
+        print("Total Voltage | %d" % (result['voltage']))
+        print("Batteries in series | %d" % (result['amp']))
+        print("Total power | %d" % (result['max']))
         print("==============================================")
         input("Press enter to continue...")
 
