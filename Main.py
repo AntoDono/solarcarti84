@@ -1,8 +1,12 @@
-import os
 import batttype
 
 try:
     import ti_system as ti
+except:
+    pass
+
+try:
+    import os
 except:
     pass
 
