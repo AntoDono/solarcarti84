@@ -33,6 +33,8 @@ def printOptions():
     print(str(count) + ". " + "Returns velocity")
     count += 1
     print(str(count) + ". " + "Brute force best combination for series and parallel")
+    count += 1
+    print(str(count) + ". " + "Voltage For Battery")
 
 def selectBattery():
     clear()
@@ -165,6 +167,9 @@ def main():
         print("Total power | %f" % (result['max']))
         print("==============================================")
         input("Press enter to continue...")
+    elif choice == 9:
+        import BattVolt
+        BattVolt.main()
 
     main()
     
