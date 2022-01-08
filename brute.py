@@ -1,92 +1,35 @@
-from getPAB import getPAB
-import getPres
-from math import floor
-
-def getPower(batteries, volt_or_ah):
-    return batteries * volt_or_ah
-
-def bruteForce(nominal_voltage, battery_type, priority="power", verbose=False):
-    battery = getPres.getPres(battery_type)
-    if (not battery): return "Invalid Battery Type"
-
-    amp_hours = getPAB(nominal_voltage)  
-    parallel = floor(amp_hours/battery["Ah"])
-    series = floor(nominal_voltage/battery["nominal-voltage"])
-    # parallel = 10
-    # series = 10
-
-    # combo = { 'parallel': parallel, 'series': series, 'max: getPower(parallel, battery['Ah']) * getPower(series, battery['nominal-voltage']), 'amp: amp_hours, 'voltage': nominal_voltage }
-
-    combo = [ parallel, series, getPower(parallel, battery['Ah']) * getPower(series, battery['nominal-voltage']),amp_hours, nominal_voltage ]
-
-    maximum_iteration = round(min(parallel, series)/2 + 1)
-    # maximum_iteration = 3
-
-    for scenario in range(0, 5):
-
-        if (scenario == 0):
-            parallel_change = 1
-            series_change = 1
-        elif (scenario == 1):
-            parallel_change = 1
-            series_change = -1
-        elif (scenario == 2):
-            parallel_change = -1
-            series_change = 1
-        elif (scenario == 3):
-            parallel_change = 0
-            series_change = 1
-        elif (scenario == 4):
-            parallel_change = 1
-            series_change = 0
-
-
-        brute_parallel = parallel
-        brute_series = series
-        
-        if (verbose): print("Current scenario: %f | PC: %f | SC: %f" % (scenario, parallel_change, series_change) )
-
-        for outer in range(0, maximum_iteration ):
-
-            brute_parallel+=parallel_change
-
-            for inner in range(0, maximum_iteration):
-                brute_series+=series_change
-
-                brute_nominal = getPower(brute_series, battery['nominal-voltage']) 
-                brute_amp = getPower( brute_parallel, battery['Ah'])
-
-                brute_power = brute_nominal * brute_amp
-
-                if (verbose): print("Series: %f | Parallel: %f | Power: %f" % (brute_series, brute_parallel, brute_power))
-
-                if (brute_power <= 5000):
-                    applychange = False
-
-                    if (combo[2]<brute_power):
-                        if (priority=="amp" and combo[1]<brute_series):
-                            applychange = True
-                        elif (priority=="voltage" and combo[1]<brute_series):
-                            applychange = True
-                        else:
-                            applychange = True
-
-                    if (applychange):
-                        combo[0] = brute_parallel
-                        combo[1] = brute_series
-                        combo[2] = brute_power
-                        combo[3] = brute_amp
-                        combo[4] = brute_nominal
-
-                        print("Found new maximum combination: ")
-                        print(combo)
-
-            brute_series-= maximum_iteration * series_change
-            
-        brute_parallel = parallel
-        brute_series = series
-
-    return combo
-
-def description():
-    return "Brute force best combination for series and parallel"
+b=False
+Q=range
+M=print
+from getPAB import getPAB as Z
+import getPres as a
+from math import floor as P
+def J(batteries,volt_or_ah):return batteries*volt_or_ah
+def bruteForce(nominal_voltage,battery_type,priority='power',verbose=b):
+	Y=True;X='nominal-voltage';W='Ah';S=verbose;R=priority;N=nominal_voltage;C=a.getPres(battery_type)
+	if not C:return'Invalid Battery Type'
+	T=Z(N);G=P(T/C[W]);H=P(N/C[X]);A=[G,H,J(G,C[W])*J(H,C[X]),T,N];O=round(min(G,H)/2+1)
+	for E in Q(0,5):
+		if E==0:F=1;D=1
+		elif E==1:F=1;D=-1
+		elif E==2:F=-1;D=1
+		elif E==3:F=0;D=1
+		elif E==4:F=1;D=0
+		I=G;B=H
+		if S:M('Current scenario: %f | PC: %f | SC: %f'%(E,F,D))
+		for c in Q(0,O):
+			I+=F
+			for d in Q(0,O):
+				B+=D;U=J(B,C[X]);V=J(I,C[W]);K=U*V
+				if S:M('Series: %f | Parallel: %f | Power: %f'%(B,I,K))
+				if K<=5000:
+					L=b
+					if A[2]<K:
+						if R=='amp'and A[1]<B:L=Y
+						elif R=='voltage'and A[1]<B:L=Y
+						else:L=Y
+					if L:A[0]=I;A[1]=B;A[2]=K;A[3]=V;A[4]=U;M('Found new maximum combination: ');M(A)
+			B-=O*D
+		I=G;B=H
+	return A
+def B():return'Brute force best combination for series and parallel'
