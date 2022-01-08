@@ -1,7 +1,6 @@
-import getPAB
-from getPara import getPara
+from getPAB import getPAB
 import getPres
-import math
+from math import floor
 
 def getPower(batteries, volt_or_ah):
     return batteries * volt_or_ah
@@ -10,13 +9,18 @@ def bruteForce(nominal_voltage, battery_type, priority="power", verbose=False):
     battery = getPres.getPres(battery_type)
     if (not battery): return "Invalid Battery Type"
 
-    amp_hours = getPAB.getPAB(nominal_voltage)
-    parallel = math.floor(amp_hours/battery["Ah"])
-    series = math.floor(nominal_voltage/battery["nominal-voltage"])
+    amp_hours = getPAB(nominal_voltage)  
+    parallel = floor(amp_hours/battery["Ah"])
+    series = floor(nominal_voltage/battery["nominal-voltage"])
+    # parallel = 10
+    # series = 10
 
-    combo = { 'parallel': parallel, 'series': series, 'max': getPower(parallel, battery['Ah']) * getPower(series, battery['nominal-voltage']), 'amp': amp_hours, 'voltage': nominal_voltage }
+    # combo = { 'parallel': parallel, 'series': series, 'max: getPower(parallel, battery['Ah']) * getPower(series, battery['nominal-voltage']), 'amp: amp_hours, 'voltage': nominal_voltage }
+
+    combo = [ parallel, series, getPower(parallel, battery['Ah']) * getPower(series, battery['nominal-voltage']),amp_hours, nominal_voltage ]
 
     maximum_iteration = round(min(parallel, series)/2 + 1)
+    # maximum_iteration = 3
 
     for scenario in range(0, 5):
 
@@ -59,20 +63,20 @@ def bruteForce(nominal_voltage, battery_type, priority="power", verbose=False):
                 if (brute_power <= 5000):
                     applychange = False
 
-                    if (combo['max']<brute_power):
-                        if (priority=="amp" and combo['series']<brute_series):
+                    if (combo[2]<brute_power):
+                        if (priority=="amp" and combo[1]<brute_series):
                             applychange = True
-                        elif (priority=="voltage" and combo['series']<brute_series):
+                        elif (priority=="voltage" and combo[1]<brute_series):
                             applychange = True
                         else:
                             applychange = True
 
                     if (applychange):
-                        combo['parallel'] = brute_parallel
-                        combo['series'] = brute_series
-                        combo['max'] = brute_power
-                        combo['amp'] = brute_amp
-                        combo['voltage'] = brute_nominal
+                        combo[0] = brute_parallel
+                        combo[1] = brute_series
+                        combo[2] = brute_power
+                        combo[3] = brute_amp
+                        combo[4] = brute_nominal
 
                         print("Found new maximum combination: ")
                         print(combo)

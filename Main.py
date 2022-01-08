@@ -1,171 +1,43 @@
-import batttype
-
-try:
-    import ti_system as ti
-except:
-    pass
-
-try:
-    import os
-except:
-    pass
-
-def clear():
-    try:
-        ti.disp_clr()
-    except:
-        os.system('cls')
-
-def printOptions():
-    count = 1
-    print(str(count) + ". " + "Calculate solar array area")
-    count += 1
-    print(str(count) + ". " + "Calculate Array Voltage")
-    count += 1
-    print(str(count) + ". " + "Calculate Amp Hour")
-    count += 1
-    print(str(count) + ". " + "Calculate Parallel Batteries")
-    count += 1
-    print(str(count) + ". " + "Calculate Power")
-    count += 1
-    print(str(count) + ". " + "Calculates Supercharged Voltage")
-    count += 1
-    print(str(count) + ". " + "Returns velocity")
-    count += 1
-    print(str(count) + ". " + "Brute force best combination for series and parallel")
-
-def selectBattery():
-    clear()
-    print("Battery types: ")
-    count = 1
-    mapBatt = {}
-    for batt in batttype.batteries.keys():
-        print("%d. %s | V: %s AH: %s" % (count, batt, str(batttype.batteries[batt]['nominal-voltage']), str(batttype.batteries[batt]['Ah'])))
-        mapBatt[count] = batt
-        count+=1
-    choice = isint(input("Select a battery > "))
-    return mapBatt[choice]
-
-def isverbose():
-    clear()
-    print("Verbose on?")
-    print("1. Yes")
-    print("2. No")
-    choice = isint(input("Your response > "))
-    if (choice==1): return True
-    return False
-
-def choosePriority():
-    clear()
-    print("Please choose your priority: ")
-    print("1. Get Maximum Voltage")
-    print("2. Get Maximum Amp Hours")
-    print("3. Get Maximum Power")
-    choice = isint(input("Select your priority > "))
-    if (choice==1): return "voltage"
-    elif (choice==2): return "amp"
-    elif (choice==3): return "power"
-
-def isint(response):
-    try:
-        float(response)
-        return float(response)
-    except:
-        clear()
-        print("Not an number, press enter to try again.")
-        input("Press enter to continue...")
-        main()
-
-
-def main():
-    clear()
-    print("Staten Island SolarCar\n")
-    printOptions()
-
-    choice = isint((input("\nSelect an option > ")))
-
-    if (choice == 1):
-        import getArea
-        clear()
-        cells = isint(input("Please input the number of cells: "))
-        area = isint(input("Please input the area of one cell: "))
-        result = getArea.getArea(cells, area)
-        print("The total area of the solar array is: %f" % (result))
-        input("Press enter to continue...")
-        clear()
-    elif (choice == 2):
-        import getArray
-        clear()
-        cells = isint(input("Please input the number of cells: "))
-        volt = isint(input("Please input the voltage of one cell: "))
-        result = getArray.getArray(cells, volt)
-        print("The total voltage of the solar array is: %f" % (result))
-        input("Press enter to continue...")
-        clear()
-    elif (choice == 3):
-        import getPAB
-        clear()
-        battvolt = isint(input("Please input the battery voltage: "))
-        result = getPAB.getPAB(battvolt)
-        print("The resulted amp hour is: %f" % (result))
-        input("Press enter to continue...")
-        clear()
-    elif (choice == 4):
-        import getPara
-        clear()
-        battAmp = isint(input("Please input the battery amp hour: "))
-        cellAmp = isint(input("Please input the cell amp hour: "))
-        result = getPara.getPara(battAmp, cellAmp)
-        print("The resulted number of batteries needed are: %f" % (result))
-        input("Press enter to continue...")
-        clear()
-    elif (choice == 5):
-        import getPow
-        clear()
-        arrvolt = isint(input("Voltage of the whole array: "))
-        current = isint(input("Please input the current: "))
-        result = getPow.getPow(arrvolt, current)
-        input("Press enter to continue...")
-        print("The power is: {result}")
-        clear()
-    elif (choice == 6):
-        import SCharge
-
-        clear()
-        volt = isint(input("Desire voltage: "))
-        result = SCharge.getSCharge(volt)
-        print("The supercharged voltage is: %f" % (result))
-        input("Press enter to continue...")
-        clear()
-    elif (choice == 7):
-        import Velocity
-
-        clear()
-        dist = isint(input("Distance traveled (m): "))
-        time = isint(input("Elapsed time (s): "))
-        result = Velocity.getVelocity(dist, time)
-        print("The velocity is: %f m/s" % (result))
-        input("Press enter to continue...")
-        clear()
-    elif (choice==8):
-        import brute
-        clear()
-        nominal_volt = isint(input("Please provide the nominal (desired) voltage: "))
-        choice = selectBattery()
-        priority = choosePriority()
-        verbose = isverbose()
-        result = brute.bruteForce(nominal_volt, choice, priority=priority, verbose=verbose)
-        print("Best result found:")
-        print(result)
-        print("===================RESULT=====================")
-        print("Batteries in parallel | %f" % (result['parallel']))
-        print("Batteries in series | %f" % (result['series']))
-        print("Total Voltage | %f" % (result['voltage']))
-        print("Batteries in series | %f" % (result['amp']))
-        print("Total power | %f" % (result['max']))
-        print("==============================================")
-        input("Press enter to continue...")
-
-    main()
-    
-main()
+J=float
+G='Press enter to continue...'
+D=str
+B=input
+A=print
+import batttype as H
+try:import ti_system as F
+except:pass
+try:import os
+except:pass
+def C():
+	try:F.disp_clr()
+	except:os.system('cls')
+def K():C='. ';B=1;A(D(B)+C+'Calculate solar array area');B+=1;A(D(B)+C+'Calculate Array Voltage');B+=1;A(D(B)+C+'Calculate Amp Hour');B+=1;A(D(B)+C+'Calculate Parallel Batteries');B+=1;A(D(B)+C+'Calculate Power');B+=1;A(D(B)+C+'Calculates Supercharged Voltage');B+=1;A(D(B)+C+'Returns velocity');B+=1;A(D(B)+C+'Brute force best combination for series and parallel')
+def L():
+	C();A('Battery types: ');G=1;I={}
+	for F in H.batteries.keys():A('%d. %s | V: %s AH: %s'%(G,F,D(H.batteries[F]['nominal-voltage']),D(H.batteries[F]['Ah'])));I[G]=F;G+=1
+	J=E(B('Select a battery > '));return I[J]
+def M():
+	C();A('Verbose on?');A('1. Yes');A('2. No');D=E(B('Your response > '))
+	if D==1:return True
+	return False
+def N():
+	C();A('Please choose your priority: ');A('1. Get Maximum Voltage');A('2. Get Maximum Amp Hours');A('3. Get Maximum Power');D=E(B('Select your priority > '))
+	if D==1:return'voltage'
+	elif D==2:return'amp'
+	elif D==3:return'power'
+def E(response):
+	D=response
+	try:J(D);return J(D)
+	except:C();A('Not an number, press enter to try again.');B(G);I()
+def I():
+	h='Batteries in series | %f';g='Please input the number of cells: ';C();A('Staten Island SolarCar\n');K();F=E(B('\nSelect an option > '))
+	if F==1:import getArea as O;C();H=E(B(g));P=E(B('Please input the area of one cell: '));D=O.getArea(H,P);A('The total area of the solar array is: %f'%D);B(G);C()
+	elif F==2:import getArray as Q;C();H=E(B(g));J=E(B('Please input the voltage of one cell: '));D=Q.getArray(H,J);A('The total voltage of the solar array is: %f'%D);B(G);C()
+	elif F==3:import getPAB as R;C();S=E(B('Please input the battery voltage: '));D=R.getPAB(S);A('The resulted amp hour is: %f'%D);B(G);C()
+	elif F==4:import getPara as T;C();U=E(B('Please input the battery amp hour: '));V=E(B('Please input the cell amp hour: '));D=T.getPara(U,V);A('The resulted number of batteries needed are: %f'%D);B(G);C()
+	elif F==5:import getPow as W;C();X=E(B('Voltage of the whole array: '));Y=E(B('Please input the current: '));D=W.getPow(X,Y);B(G);A('The power is: {result}');C()
+	elif F==6:import SCharge as Z;C();J=E(B('Desire voltage: '));D=Z.getSCharge(J);A('The supercharged voltage is: %f'%D);B(G);C()
+	elif F==7:import Velocity as a;C();b=E(B('Distance traveled (m): '));c=E(B('Elapsed time (s): '));D=a.getVelocity(b,c);A('The velocity is: %f m/s'%D);B(G);C()
+	elif F==8:import brute;C();d=E(B('Please provide the nominal (desired) voltage: '));F=L();e=N();f=M();D=brute.bruteForce(d,F,priority=e,verbose=f);A('Best result found:');A(D);A('===================RESULT=====================');A('Batteries in parallel | %f'%D[0]);A(h%D[1]);A('Total Voltage | %f'%D[-1]);A(h%D[-2]);A('Total power | %f'%D[2]);A('==============================================');B(G)
+	I()
+I()
